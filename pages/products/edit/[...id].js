@@ -16,12 +16,13 @@ export default function EditProductPage(){
             setProductInfo(response.data);
         })
 
-    },[id])
+    },[id]);
 
     return (
         <Layout>
             <h1>Editar Productos</h1>
-            <ProductForm>{...productInfo}</ProductForm>
+            {productInfo && (<ProductForm {...productInfo}/>)}
+            
         </Layout>
     )
 }
