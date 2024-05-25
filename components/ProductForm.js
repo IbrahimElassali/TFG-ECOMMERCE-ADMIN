@@ -32,9 +32,25 @@ export default function ProductForm({
     router.push("/products");
   }
 
-  function uploadImage(ev){
-    //console.log(ev);
-    
+  async function uploadImages(ev) {
+    const files = ev.target?.files;
+    if (files?.length > 0) {
+      const data = new FormData();
+      for (const file of files) {
+        data.append('file', file);
+      }
+      try {
+        const res = await axios.post('/api/upload', data, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        console.log(res.data);
+      } catch (error) {
+        console.error("Error uploading files:", error);
+      }
+    }
+    console.log("llega aqui?");
   }
 
   return (
@@ -46,11 +62,13 @@ export default function ProductForm({
         value={title}
         onChange={(ev) => setTitle(ev.target.value)}
       />
+
       <label>
         Imagenes
       </label>
+
       <div className="mb-2">
-        <label className="w-24 h-24 gap-1 rounded-lg text-gray-700 bg-gray-100 border text-center flex flex-col items-center justify-center">
+        <label className="w-24 h-24 cursor-pointer gap-1 rounded-lg text-gray-700 bg-gray-100 border text-center flex flex-col items-center justify-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -66,12 +84,14 @@ export default function ProductForm({
             />
           </svg>
           <div>
-          Añadir{" "}
+            Subir
           </div>
-          <input type="file" onChange={uploadImage} className="hidden"></input>
+          <input type="file" className="hidden" onChange={uploadImages} />
         </label>
-        {!images?.lenght && <div>No hay imagenes de este producto</div>}
+        {!images?.lenght && 
+        (<div>No hay imagenes de este producto</div>)}
       </div>
+
       <label>Descripcion</label>
       <textarea
         placeholder="Descripcion"
