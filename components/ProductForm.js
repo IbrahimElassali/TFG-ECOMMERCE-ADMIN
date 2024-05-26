@@ -49,8 +49,8 @@ export default function ProductForm({
       } catch (error) {
         console.error("Error uploading files:", error);
       }
+
     }
-    console.log("llega aqui?");
   }
 
   return (
