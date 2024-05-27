@@ -1,8 +1,8 @@
-import Layout from "@/components/layout"
-import { useRouter } from "next/router"
-import { useEffect, useState } from "react";
-import axios from "axios";
 import ProductForm from "@/components/ProductForm";
+import Layout from "@/components/layout";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export default function EditProductPage(){
     const [productInfo, setProductInfo]= useState(null);
@@ -10,7 +10,7 @@ export default function EditProductPage(){
     const {id} = router.query;
     useEffect(()=>{
         if(!id){
-            return;
+            return;  
         }
         axios.get('/api/products?id='+id).then(response =>{
             setProductInfo(response.data);
