@@ -1,7 +1,7 @@
-import Layout from "@/components/layout";
+import Layout from "@/components/Layout";
+import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
