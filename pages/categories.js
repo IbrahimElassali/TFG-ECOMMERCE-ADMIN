@@ -54,11 +54,20 @@ export default function Categories() {
         <thead>
           <tr>
             <td>Nombre de categorias</td>
+            <td>Rama Categoria</td>
+            <td></td>
           </tr>
         </thead>
         <tbody>
           {categories.length > 0 && categories.map(category =>(
-            <tr><td>{category.name}</td></tr>
+            <tr>
+              <td>{category.name}</td>
+              <td>{category?.parent?.name}</td>
+              <td>
+                <button className="btn-primary mr-1">Editar</button>
+                <button className="btn-primary">Borrar</button>
+              </td>
+              </tr>
           ))}
         </tbody>
       </table>
