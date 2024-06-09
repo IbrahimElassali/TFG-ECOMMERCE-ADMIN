@@ -1,22 +1,29 @@
 import Logo from "@/components/Logo";
-import Nav from "@/components/nav";
+import Nav from "@/components/Nav";
 import { signIn, useSession } from "next-auth/react";
+import { useRouter } from 'next/router';
 import { useState } from "react";
 
-export default function Layout({children}) {
-  const [showNav,setShowNav] = useState(false);
-  const { data: session } = useSession()
-  if(!session) {
+export default function Layout({ children }) {
+  const [showNav, setShowNav] = useState(false);
+  const { data: session } = useSession();
+  const router = useRouter();
+  const isHomePage = router.pathname === '/';
+
+  if (!session) {
     return (
       <div className="bg-bgGray w-screen h-screen flex items-center">
-      <div className="text-center w-full">
-        <button onClick={() => signIn('google')} className="bg-white p-2 px-4 rounded-lg">Login with Google</button>
+        <div className="text-center w-full">
+          <button onClick={() => signIn('google')} className="bg-white p-2 px-4 rounded-lg">
+            Iniciar sesión con Google
+          </button>
+        </div>
       </div>
-    </div>)
+    );
   }
 
-  return(
-    <div className="bg-bgGray min-h-screen ">
+  return (
+    <div className="bg-bgGray min-h-screen">
       <div className="block md:hidden flex items-center p-4">
         <button onClick={() => setShowNav(true)}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
@@ -28,12 +35,11 @@ export default function Layout({children}) {
         </div>
       </div>
       <div className="flex">
-        <Nav show={showNav} />
+        {!isHomePage && <Nav show={showNav} />}
         <div className="flex-grow p-4">
           {children}
         </div>
       </div>
     </div>
-
   );
 }
