@@ -54,11 +54,17 @@ export default function ProductForm({
       for (const file of files) {
         data.append('file', file);
       }
-      const res = await axios.post('/api/upload', data);
-      setImages(oldImages => {
-        return [...oldImages, ...res.data.links];
-      });
-      setIsUploading(false);
+      try {
+        const res = await axios.post('/api/upload', data);
+        setImages(oldImages => {
+          return [...oldImages, ...res.data.links];
+        });
+      } catch (error) {
+        console.error('Error uploading images:', error);
+        alert('Failed to upload images. Please try again.');
+      } finally {
+        setIsUploading(false);
+      }
     }
   }
   function updateImagesOrder(images) {
